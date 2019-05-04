@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<style>
+    div{
+        margin:auto;
+        width:40%;
+        padding:20px;
+    }
+    .btn{
+        background-color: green;
+    }
+    .btn-danger{
+        background-color:rgb(209, 12, 12);
+        width:15px;
+        height:24px;
+        padding:1px;
+    }
+    ul li{
+        line-height: 2em;
+    }
+</style>
+<body>
+    <script>
+        let app = angular.module("shoppingCard",[]);
+        app.controller("myCtrl",function($scope){
+            $scope.items=['RENAULT',"AUDI",'BMW'];
+            $scope.error='';
+            $scope.addItem=function(){
+                if(!$scope.item)
+                    return;
+                if($scope.items.indexOf($scope.item.toUpperCase())==-1){
+                    $scope.items.push($scope.item.toUpperCase());
+                    $scope.error='';
+                }
+                else
+                    $scope.error = 'This item is already exists in the card list';
+                $scope.item=''; 
+            }
+            $scope.removeItem=function(ind){
+                $scope.items.splice(ind,1);
+            }
+        });
+    </script>
+    <div ng-app="shoppingCard" ng-controller='myCtrl' style="background-color:LightGray;">
+        <ul>
+            <li ng-repeat='i in items'>
+                {{i}}  <span ng-click='removeItem($index)'><button class='btn btn-danger'>x</button></span>
+            </li>
+        </ul>
+        <input type='text' name='input' ng-model='item' autofocus>
+        <button ng-click='addItem()' class='btn'>Add</button>
+        <span class='text-danger'>{{error}}</span>
+    </div>
+</body>
+</html>
